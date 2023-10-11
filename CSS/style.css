@@ -1,0 +1,91 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container{
+    border: 2px solid red;    
+    height: 460px;
+    width: 220px;
+    background-color: rgba(0, 0, 0, 0.752);
+    color: white;
+}
+.container .left{
+    height: 190px;
+    border: 2px solid blue; 
+    display: flex;
+    justify-content: center;
+    align-items: center;       
+}
+.container .left .timer{
+    font-size: 3vw;
+}
+.container .right{
+    height: 264px;    
+    border: 2px solid blue;    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.container .right .display{
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    align-items: center;
+    font-size: 2vw;
+}
+.container .right .changers{
+    display: flex;
+    justify-content: space-around;
+    height: 110px;
+    align-items: center;
+}
+.container .right .changers .left-side{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 14vh;
+}
+.container .right .changers .left-side .left-display{
+    font-size: 1.5vw;
+}
+.container .right .changers .right-side .right-display{
+    font-size: 1.5vw;
+}
+.container .right .changers .right-side{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 14vh;
+}
+.footer-btn{
+    display: flex;
+    justify-content: space-around;
+    height: 80px;
+    align-items: center;
+}
+.footer-pause{
+    font-size: 1vw;
+}
+.footer-reset{
+    font-size: 1vw;
+}
+.btn-all{
+    background-color: black;
+    color: white;
+    padding: 1vw;
+    border-radius: 1.3vw;
+}
+#minus{
+    padding: 1vh 1vw;
+}
+#plus{
+    padding: 1vh 1vw;
+}
