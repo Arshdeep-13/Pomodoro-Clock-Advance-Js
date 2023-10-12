@@ -9,7 +9,7 @@ body{
     height: 100vh;
 }
 .container{
-    border: 2px solid red;    
+    /* border: 2px solid red;     */
     height: 460px;
     width: 220px;
     background-color: rgba(0, 0, 0, 0.752);
@@ -17,17 +17,18 @@ body{
 }
 .container .left{
     height: 190px;
-    border: 2px solid blue; 
+    /* border: 2px solid blue;  */
     display: flex;
     justify-content: center;
     align-items: center;       
 }
 .container .left .timer{
     font-size: 3vw;
+    position: absolute;
 }
 .container .right{
     height: 264px;    
-    border: 2px solid blue;    
+    /* border: 2px solid blue;     */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -88,4 +89,11 @@ body{
 }
 #plus{
     padding: 1vh 1vw;
+}
+rect{
+    fill: none;
+    stroke: url(#GradientColor);
+    stroke-width: 14px;
+    stroke-dasharray: 775;
+    stroke-dashoffset: 0;
 }

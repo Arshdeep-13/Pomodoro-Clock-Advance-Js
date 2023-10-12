@@ -1,0 +1,43 @@
+@media screen and (max-width: 600px) {
+  .container {
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+  }
+  .container .left {
+    height: 40vh;
+  }
+  .container .left .timer {
+    font-size: 12vw;
+  }
+  .container .right {
+    height: 50vh;
+    justify-content: space-evenly;
+  }
+  .container .right .display {
+    font-size: 10vw;
+  }
+  .container .right .changers .left-side {
+    font-size: 5vw;
+  }
+  .container .right .changers .left-side .left-display {
+    font-size: 6vw;
+  }
+  .container .right .changers .right-side {
+    font-size: 5vw;
+  }
+  .container .right .changers .right-side .right-display {
+    font-size: 6vw;
+  }
+  #minus,
+  #plus {
+    font-size: 6vw;
+    padding: 0.5vh 5vw;
+    border-radius: 4vw;
+  }
+  .footer-pause,
+  .footer-start {
+    font-size: 5vw;
+    padding: 4vw;
+    border-radius: 4vw;
+  }
+}

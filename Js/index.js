@@ -9,6 +9,10 @@ let sessionDisplay = document.querySelector('.display');
 let getMin = 0, getHour = 0, getSec = 0;
 let getBreakMin = 0, getBreakHour = 0, getBreakSec = 0;
 let disableButton = true;
+let sessionTime = document.querySelectorAll(".time-display")[0];
+let breakTime = document.querySelectorAll(".time-display")[1];
+let intervaltime;
+let interval;
 
 function display() {
     let formattedHour = getHour.toString().length === 1 ? `0${getHour}` : getHour;
@@ -40,19 +44,21 @@ function showHideButton() {
         disableButton = true;
     }
 }
-
-sessionIncrease.addEventListener('click', (e) => {
+sessionIncrease.addEventListener('click', () => {
     sessionDisplay.innerHTML = "Session 1"
-    getMin += parseInt(e.target.value);
+    sessionDisplay.style.color = "white"
+    let ButtonValue = parseInt(sessionTime.innerHTML)
+    getMin += ButtonValue;
     if (getMin > 60) {
         getHour++;
         getMin = 0;
     }
     display();
 })
-sessionDecrease.addEventListener("click", (e) => {
+sessionDecrease.addEventListener("click", () => {
     sessionDisplay.innerHTML = "Session 1"
-    let value = e.target.value;
+    sessionDisplay.style.color = "white"
+    let value = parseInt(sessionTime.innerHTML);
     if (getMin <= 0) {
         getMin = 0;
         if (getHour > 0) {
@@ -65,15 +71,30 @@ sessionDecrease.addEventListener("click", (e) => {
     }
     display();
 })
+function ProgressBar(totalTime) {
+    let circlecontainer = document.querySelector("rect");
+    let value = 0;
+    let stop = 775;
+    let intervaltime; // Declare intervaltime variable
 
-let interval;
-
+    intervaltime = setInterval(() => {
+        // console.log(`value = ${value}`);
+        if (value >= stop) {
+            clearInterval(intervaltime);
+        }
+        circlecontainer.style.strokeDashoffset = stop - value; // Fix the strokeDashoffset calculation
+        value += stop/totalTime;
+    }, 1000); // Update the interval time based on totalTime
+}
 startTime.addEventListener('click', (e) => {
+    let totalTime = (getHour * 3600) + (getMin * 60) + getSec; // Calculate totalTime in seconds
+    if(totalTime === 0) alert("Plz add time to Start Clock...")
     if (sessionDisplay.innerHTML === 'Session 1') {
-        if (interval == 'undefined') {
+        if (typeof interval === 'undefined') { // Check if interval is undefined
             getSec = 60;
             getMin = getMin - 1;
         }
+
         interval = setInterval(() => {
             getSec = getSec - 1;
             if (getSec < 0) {
@@ -92,18 +113,24 @@ startTime.addEventListener('click', (e) => {
                 clearInterval(interval);
             }
         }, 1000);
+
         if (startTime.innerHTML === 'Reset') {
+            clearInterval(intervaltime);
+            clearInterval(interval);
             getHour = 0, getMin = 0, getSec = 0;
-            clearInterval(interval)
             display();
             startTime.innerHTML = 'Start';
+            window.location.reload();
         }
         else {
             startTime.innerHTML = 'Reset';
+            ProgressBar(totalTime);
         }
     }
     else {
-        if (interval == 'undefined') {
+        let totalTime = (getBreakHour * 3600) + (getBreakMin * 60) + getBreakSec; // Calculate totalTime in seconds
+        if(totalTime === 0) alert("Plz add time to Start Clock...")
+        if (typeof interval === 'undefined') { // Check if interval is undefined
             getBreakSec = 60;
             getBreakMin = getBreakMin - 1;
         }
@@ -124,44 +151,53 @@ startTime.addEventListener('click', (e) => {
             if (getBreakMin === 0 && getBreakSec === 0 && getBreakHour === 0) {
                 clearInterval(interval);
             }
-        }, 1000);
+        }, 1000);        
         if (startTime.innerHTML === 'Reset') {
             getBreakHour = 0, getBreakMin = 0, getBreakSec = 0;
-            clearInterval(interval)
+            clearInterval(interval);
+            clearInterval(intervaltime);
             BreakDisplay();
             startTime.innerHTML = 'Start';
+            window.location.reload();
         }
         else {
             startTime.innerHTML = 'Reset';
+            ProgressBar(totalTime);
         }
     }
     showHideButton();
 });
-
 pauseTime.addEventListener("click", (e) => {
+    let totalTime = (getHour * 3600) + (getMin * 60) + getSec;
+    let totalBreakTime = (getBreakHour * 3600) + (getBreakMin * 60) + getBreakSec;
+    if((totalTime + totalBreakTime) === 0) alert("Plz add time to Start Clock...")
     sessionIncrease.disabled = true;
     sessionDecrease.disabled = true;
     breakIncrease.disabled = true;
     breakDecrease.disabled = true;
     if (interval) {
-        clearInterval(interval); // Clear the interval when pausing.
+        clearInterval(interval); // Clear the timer interval.
+    }
+    if (intervaltime) {
+        clearInterval(intervaltime); // Clear the ProgressBar interval.
     }
     showHideButton();
     startTime.innerHTML = "Start";
 });
-
-breakIncrease.addEventListener("click", (e) => {
-    sessionDisplay.innerHTML = "Session 2"
+breakIncrease.addEventListener("click", () => {
+    sessionDisplay.innerHTML = "Break !!"
+    sessionDisplay.style.color = "red"
     if (getBreakMin >= 60) {
         getBreakHour++;
     }
     else {
-        getBreakMin += parseInt(e.target.value);
+        getBreakMin += parseInt(breakTime.innerHTML);
     }
     BreakDisplay();
 })
-
 breakDecrease.addEventListener('click', (e) => {
+    sessionDisplay.innerHTML = "Break !!"
+    sessionDisplay.style.color = "red"
     if (getBreakMin <= 0) {
         if (getBreakHour > 0) {
             getBreakHour--;
@@ -172,8 +208,23 @@ breakDecrease.addEventListener('click', (e) => {
         }
     }
     else {
-        getBreakMin -= parseInt(e.target.value);
+        getBreakMin -= parseInt(breakTime.innerHTML);
     }
     BreakDisplay();
 })
-
+sessionTime.addEventListener("click", ()=>{
+    let text = prompt("Customize your time : ");
+    if(text == null){        
+    }
+    else{
+        sessionTime.innerHTML = `${text} min`
+    }
+})
+breakTime.addEventListener("click", ()=>{
+    let text = prompt("Customize your time : ");
+    if(text == null){        
+    }
+    else{
+        breakTime.innerHTML = `${text} min`
+    }
+})
